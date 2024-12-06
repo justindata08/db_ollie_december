@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: jaffle_shop
+    description: our jaffle_shop data
+    database: raw
+    schema: jaffle_shop
+    tables:
+      - name: customers
+        columns:
+          - name: id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+              - relationships:
+                  to: ref('orders')
+                  field: user_id
+      - name: orders
+        columns:
+          - name: id
+            description: primary key
+            tests:
+              - unique
+              - not_null
+          - name: user_id
+            description: foreign key from customers table
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('customers')
+                  field: id
+          - name: status
+            description: status of the order
+            tests:
+              - accepted_values:
+                  values: ['returned', 'completed', 'return_pending', 'shipped', 'placed']
