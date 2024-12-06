@@ -41,3 +41,7 @@ models:
     example:
       jaffle_shop:
       +materialized: table
+    
+    marts:
+      marketing:
+        +materialized: table
